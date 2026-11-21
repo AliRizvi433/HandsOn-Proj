@@ -1,0 +1,4 @@
+{
+  "provider": "gemini",
+  "embedding_model": "gemini-embedding-001"
+}

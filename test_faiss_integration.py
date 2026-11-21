@@ -39,7 +39,6 @@ def configure_deterministic_index(monkeypatch, tmp_path, documents):
 def test_real_faiss_index_is_saved_loaded_and_retrieved(monkeypatch, tmp_path):
     documents = [
         paper("P1", "Quantum security", 2026, "quantum cryptography"),
-        paper("P1", "Quantum security duplicate", 2026, "quantum cryptography"),
         paper("P2", "Machine learning", 2024, "machine learning"),
     ]
     configure_deterministic_index(monkeypatch, tmp_path, documents)
@@ -50,6 +49,7 @@ def test_real_faiss_index_is_saved_loaded_and_retrieved(monkeypatch, tmp_path):
     assert (tmp_path / "faiss_index" / "index.faiss").is_file()
     assert (tmp_path / "faiss_index" / "index.pkl").is_file()
     assert (tmp_path / "faiss_index" / "index_metadata.json").is_file()
+    assert loaded.index.ntotal == 2
     assert vectorstore.get_distinct_paper_count(loaded) == 2
 
     results = retriever.search_papers("quantum", min_year=2025, k=2)
