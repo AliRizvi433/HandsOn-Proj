@@ -1,14 +1,14 @@
-import os
-import json
-from dotenv import load_dotenv
+"""Diagnostic entry point for the Academic Research Assistant."""
 
-load_dotenv()
+from project.loader import load_documents
+from project.config import get_provider
 
-with open("data/documents.json", encoding="utf-8") as f:
-    data = json.load(f)
 
-print("Loaded:", len(data))
+def main():
+    count = len(load_documents())
+    print(f"Loaded academic papers: {count}")
+    print(f"Configured embedding provider: {get_provider()}")
 
-provider = "openai" if os.getenv("AI_PROVIDER") == "openai" else "gemini"
 
-print("Provider:", provider)
+if __name__ == "__main__":
+    main()

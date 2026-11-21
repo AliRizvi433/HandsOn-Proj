@@ -6,6 +6,7 @@ load_dotenv()
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA_PATH = ROOT / "data" / "academic_papers.csv"
+INDEX_PATH = ROOT / "data" / "faiss_index"
 
 load_dotenv(ROOT / ".env", override=False)
 

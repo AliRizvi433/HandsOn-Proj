@@ -33,3 +33,4 @@ pip-system-certs
 
 langchain-aws
 fastmcp
+pytest

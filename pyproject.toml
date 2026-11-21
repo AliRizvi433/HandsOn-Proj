@@ -40,6 +40,11 @@ dependencies = [
     "wikipedia>=1.4.0",
 ]
 
+[dependency-groups]
+dev = [
+    "pytest>=9.0.0",
+]
+
 [project.scripts]
 project = "project:main"
 
