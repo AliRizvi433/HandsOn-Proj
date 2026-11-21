@@ -1,8 +1,6 @@
-import csv
-
 import streamlit as st
 from project.rag import ask_question
-from project.loader import load_documents
+from project.vectorstore import get_distinct_paper_count, load_vectorstore
 
 st.set_page_config(
     page_title="Academic Research Assistant",
@@ -14,28 +12,34 @@ st.write("Ask questions about recent academic papers and get answers based on th
 
 question = st.text_input("Enter your question:")
 
+filter_by_year = st.checkbox("Filter by minimum publication year", value=False)
+
 year = st.number_input(
     "Minimum publication year:",
     min_value=2000,
     max_value=2026,
-    value=2023
+    value=2023,
+    disabled=not filter_by_year,
 )
 
 try:
-    indexed_document_count = len(load_documents())
-except (OSError, csv.Error, ValueError, KeyError) as exc:
-    indexed_document_count = 1
+    indexed_document_count = get_distinct_paper_count(load_vectorstore())
+    index_available = indexed_document_count > 0
+except (OSError, ValueError, KeyError) as exc:
+    indexed_document_count = 0
+    index_available = False
     st.error(f"Unable to load the paper dataset: {exc}")
 
 k = st.number_input(
     "Number of research papers to retrieve",
     min_value=1,
     max_value=max(1, indexed_document_count),
-    value=min(5, indexed_document_count),
+    value=max(1, min(5, indexed_document_count)),
     step=1,
+    disabled=not index_available,
 )
 
-if st.button("Search"):
+if st.button("Search", disabled=not index_available):
     if not question.strip():
         st.warning("Please enter a question.")
     elif k < 1 or k > indexed_document_count:
@@ -45,7 +49,7 @@ if st.button("Search"):
             with st.spinner("Searching for relevant papers and generating answer..."):
                 result = ask_question(
                     question,
-                    min_year=int(year),
+                    min_year=int(year) if filter_by_year else None,
                     k=int(k),
                 )
 
@@ -68,8 +72,8 @@ if st.button("Search"):
                 st.write(f"Discipline: {metadata.get('discipline', 'Unknown')}")
                 st.write(f"Paper ID: {metadata.get('paper_id', 'Unknown')}")
                 st.write(
-                    f"Relevance score: {paper.combined_score:.3f} "
-                    "(combined semantic and recency ranking)"
+                    f"Normalized ranking score: {paper.combined_score:.3f} "
+                    "(relative combined semantic and recency ranking; not a probability)"
                 )
         except (ValueError, FileNotFoundError) as exc:
             st.error(str(exc))

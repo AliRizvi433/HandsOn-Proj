@@ -27,14 +27,7 @@ def mock_faiss(monkeypatch, tmp_path, documents_with_scores):
             assert k == len(documents_with_scores)
             return documents_with_scores
 
-    monkeypatch.setattr(retriever, "FAISS", type("FAISSMock", (), {
-        "load_local": staticmethod(lambda *args, **kwargs: MockDB())
-    }))
-    index_dir = tmp_path / "faiss_index"
-    index_dir.mkdir()
-    (index_dir / "index.faiss").touch()
-    monkeypatch.setattr(retriever, "INDEX_PATH", index_dir)
-    monkeypatch.setattr(retriever, "get_embeddings", lambda: object())
+    monkeypatch.setattr(retriever, "load_vectorstore", lambda: MockDB())
 
 
 @pytest.mark.parametrize("k", [0, -1, 1.5, True])
@@ -110,3 +103,7 @@ def test_custom_and_default_top_k(monkeypatch, tmp_path, k, expected):
 def test_empty_query(query):
     with pytest.raises(ValueError, match="empty"):
         retriever.search_papers(query)
+
+
+def test_identical_faiss_scores_are_normalized_deterministically():
+    assert retriever._normalize_raw_scores([0.5, 0.5], retriever.faiss.METRIC_L2) == [1.0, 1.0]

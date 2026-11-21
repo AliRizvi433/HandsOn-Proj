@@ -2,9 +2,7 @@ from dataclasses import dataclass
 from typing import Optional
 
 import faiss
-from langchain_community.vectorstores import FAISS
-from project.embeddings import get_embeddings
-from project.config import INDEX_PATH
+from project.vectorstore import load_vectorstore
 
 
 @dataclass(frozen=True)
@@ -30,7 +28,12 @@ def _valid_year(document):
 
 
 def _normalize_raw_scores(raw_scores, metric_type):
-    """FAISS candidate scores are L2 distances or inner-product similarities."""
+    """Normalize FAISS scores to [0, 1], where 1 is the best candidate.
+
+    L2 distances are inverted after min-max scaling; inner-product similarities
+    are min-max scaled directly. A tied candidate set receives 1.0 for every
+    candidate, leaving recency and stable paper-ID ordering to break ties.
+    """
     if not raw_scores:
         return []
 
@@ -66,17 +69,7 @@ def search_papers(query, min_year=None, k=5):
         except (TypeError, ValueError):
             raise ValueError("Minimum publication year must be a valid integer.")
 
-    if not INDEX_PATH.joinpath("index.faiss").is_file():
-        raise FileNotFoundError(
-            "The FAISS index is missing. Rebuild it with "
-            "python -c \"from project.vectorstore import build_vectorstore; build_vectorstore()\""
-        )
-
-    db = FAISS.load_local(
-        str(INDEX_PATH),
-        get_embeddings(),
-        allow_dangerous_deserialization=False,
-    )
+    db = load_vectorstore()
     indexed_count = int(db.index.ntotal)
     if indexed_count <= 0:
         return []
