@@ -1,0 +1,392 @@
+[
+  {
+    "id": "doc_001",
+    "text": "During a Redis scale-up incident, connection failures increased because clients exhausted available connections. The team enabled graceful retries, increased connection pool limits, and verified backup replication before continuing the scaling operation.",
+    "metadata": {
+      "title": "Redis Connection Failures During Scale-up",
+      "tags": [
+        "redis",
+        "scaling",
+        "incident",
+        "connections"
+      ]
+    }
+  },
+  {
+    "id": "doc_002",
+    "text": "A Redis failover test exposed stale replica data after a primary node failure. Engineers improved replication monitoring, added automated failover checks, and validated replica synchronization before promoting a standby.",
+    "metadata": {
+      "title": "Redis Failover and Replica Synchronization",
+      "tags": [
+        "redis",
+        "failover",
+        "replication",
+        "incident"
+      ]
+    }
+  },
+  {
+    "id": "doc_003",
+    "text": "Redis latency increased sharply after traffic was moved to a larger cluster. Analysis showed uneven key distribution and hot keys. The team rebalanced shards and introduced application-level controls for frequently accessed keys.",
+    "metadata": {
+      "title": "Redis Hot Keys After Cluster Expansion",
+      "tags": [
+        "redis",
+        "performance",
+        "sharding",
+        "scaling"
+      ]
+    }
+  },
+  {
+    "id": "doc_004",
+    "text": "A Kafka production outage occurred when brokers ran out of disk space because topic retention was configured too aggressively. The team removed obsolete data, increased storage capacity, and adjusted retention policies.",
+    "metadata": {
+      "title": "Kafka Outage Caused by Disk Exhaustion",
+      "tags": [
+        "kafka",
+        "outage",
+        "storage",
+        "retention"
+      ]
+    }
+  },
+  {
+    "id": "doc_005",
+    "text": "Kafka consumers experienced delays during a traffic spike because several partitions had become heavily skewed. Engineers redistributed partitions and increased consumer capacity to reduce processing lag.",
+    "metadata": {
+      "title": "Kafka Consumer Lag During Traffic Spike",
+      "tags": [
+        "kafka",
+        "consumer",
+        "lag",
+        "performance"
+      ]
+    }
+  },
+  {
+    "id": "doc_006",
+    "text": "An API experienced intermittent timeouts when downstream database queries became slow. The mitigation included query optimization, connection pool tuning, and shorter request deadlines to prevent blocked requests from accumulating.",
+    "metadata": {
+      "title": "API Timeout Investigation and Mitigation",
+      "tags": [
+        "api",
+        "timeout",
+        "database",
+        "performance"
+      ]
+    }
+  },
+  {
+    "id": "doc_007",
+    "text": "A sudden increase in API traffic caused request queues to grow rapidly. Rate limiting was introduced at the gateway, with separate quotas for internal and external clients to protect backend services.",
+    "metadata": {
+      "title": "API Rate Limiting During Traffic Surge",
+      "tags": [
+        "api",
+        "rate-limiting",
+        "gateway",
+        "traffic"
+      ]
+    }
+  },
+  {
+    "id": "doc_008",
+    "text": "The authentication service returned intermittent unauthorized responses after a token signing key was rotated. The incident was resolved by synchronizing key configuration across service instances and improving key rotation procedures.",
+    "metadata": {
+      "title": "Authentication Failures After Key Rotation",
+      "tags": [
+        "authentication",
+        "tokens",
+        "security",
+        "incident"
+      ]
+    }
+  },
+  {
+    "id": "doc_009",
+    "text": "Users were unable to log in after an identity provider configuration change. Engineers discovered that callback URLs were inconsistent between environments and corrected the redirect configuration.",
+    "metadata": {
+      "title": "Login Failure Caused by Identity Provider Configuration",
+      "tags": [
+        "authentication",
+        "identity",
+        "login",
+        "configuration"
+      ]
+    }
+  },
+  {
+    "id": "doc_010",
+    "text": "A PostgreSQL database reached high CPU utilization during a reporting workload. Query analysis identified missing indexes and inefficient joins. Indexes were added and expensive reports were moved to an asynchronous processing queue.",
+    "metadata": {
+      "title": "PostgreSQL High CPU During Reporting",
+      "tags": [
+        "postgresql",
+        "database",
+        "cpu",
+        "queries"
+      ]
+    }
+  },
+  {
+    "id": "doc_011",
+    "text": "Database connections were exhausted when a new application release increased concurrent requests. The team reduced connection usage, corrected connection leaks, and configured safer pool limits.",
+    "metadata": {
+      "title": "Database Connection Pool Exhaustion",
+      "tags": [
+        "database",
+        "connections",
+        "pool",
+        "incident"
+      ]
+    }
+  },
+  {
+    "id": "doc_012",
+    "text": "A Kubernetes deployment repeatedly restarted because the container exceeded its memory limit. Engineers reviewed memory usage, corrected a leak, and adjusted resource requests and limits after validating the workload.",
+    "metadata": {
+      "title": "Kubernetes Container Restart Due to Memory Pressure",
+      "tags": [
+        "kubernetes",
+        "memory",
+        "deployment",
+        "containers"
+      ]
+    }
+  },
+  {
+    "id": "doc_013",
+    "text": "A Kubernetes service became unavailable because readiness probes were too strict during application startup. The startup process was reviewed and probe thresholds were adjusted to allow sufficient initialization time.",
+    "metadata": {
+      "title": "Kubernetes Readiness Probe Failure",
+      "tags": [
+        "kubernetes",
+        "readiness",
+        "deployment",
+        "availability"
+      ]
+    }
+  },
+  {
+    "id": "doc_014",
+    "text": "A load balancer distributed traffic unevenly because several backend instances were marked healthy despite elevated latency. Health checks were updated to include application-level readiness indicators.",
+    "metadata": {
+      "title": "Uneven Traffic Distribution Across Backend Servers",
+      "tags": [
+        "load-balancing",
+        "availability",
+        "health-checks",
+        "performance"
+      ]
+    }
+  },
+  {
+    "id": "doc_015",
+    "text": "A cache invalidation problem caused users to see outdated product information after a deployment. The team changed cache keys, introduced explicit invalidation for affected records, and added tests for cache freshness.",
+    "metadata": {
+      "title": "Stale Data After Cache Invalidation Failure",
+      "tags": [
+        "cache",
+        "invalidation",
+        "deployment",
+        "data-consistency"
+      ]
+    }
+  },
+  {
+    "id": "doc_016",
+    "text": "An application deployment introduced a configuration value that was valid in staging but missing in production. The service failed during startup. Configuration validation was added to the deployment pipeline.",
+    "metadata": {
+      "title": "Production Startup Failure From Missing Configuration",
+      "tags": [
+        "deployment",
+        "configuration",
+        "ci-cd",
+        "production"
+      ]
+    }
+  },
+  {
+    "id": "doc_017",
+    "text": "A CI pipeline became slow after additional integration tests were introduced. Engineers parallelized independent test suites, cached dependencies, and separated fast unit tests from longer integration tests.",
+    "metadata": {
+      "title": "CI Pipeline Performance Optimization",
+      "tags": [
+        "ci-cd",
+        "testing",
+        "performance",
+        "automation"
+      ]
+    }
+  },
+  {
+    "id": "doc_018",
+    "text": "A production service showed elevated error rates after a dependency released a backward-incompatible API change. The team pinned the dependency version, rolled back the deployment, and added compatibility tests.",
+    "metadata": {
+      "title": "Production Incident Caused by Dependency Change",
+      "tags": [
+        "dependencies",
+        "rollback",
+        "api",
+        "incident"
+      ]
+    }
+  },
+  {
+    "id": "doc_019",
+    "text": "Application logs became difficult to analyze because services used inconsistent field names and severity levels. A common structured logging format was introduced with standardized request IDs and error fields.",
+    "metadata": {
+      "title": "Standardizing Structured Application Logging",
+      "tags": [
+        "logging",
+        "observability",
+        "monitoring",
+        "standards"
+      ]
+    }
+  },
+  {
+    "id": "doc_020",
+    "text": "Monitoring failed to detect a service degradation because the existing alert tracked CPU but not request latency. The team introduced latency-based alerts and service-level indicators for availability and response time.",
+    "metadata": {
+      "title": "Improving Monitoring for Service Degradation",
+      "tags": [
+        "monitoring",
+        "alerts",
+        "latency",
+        "observability"
+      ]
+    }
+  },
+  {
+    "id": "doc_021",
+    "text": "A backup restoration exercise showed that database backups were completing successfully but restoration had never been validated. The team introduced scheduled restore tests and documented recovery procedures.",
+    "metadata": {
+      "title": "Database Backup Restoration Validation",
+      "tags": [
+        "backup",
+        "database",
+        "disaster-recovery",
+        "recovery"
+      ]
+    }
+  },
+  {
+    "id": "doc_022",
+    "text": "A message-processing service produced duplicate events after a consumer restarted. The team introduced idempotency keys and transaction-aware processing so repeated deliveries would not create duplicate business operations.",
+    "metadata": {
+      "title": "Preventing Duplicate Message Processing",
+      "tags": [
+        "messaging",
+        "idempotency",
+        "events",
+        "reliability"
+      ]
+    }
+  },
+  {
+    "id": "doc_023",
+    "text": "A distributed service experienced cascading failures when one downstream dependency became unavailable. Circuit breakers, bounded retries, and fallback responses were introduced to prevent failure propagation.",
+    "metadata": {
+      "title": "Preventing Cascading Failures in Distributed Services",
+      "tags": [
+        "distributed-systems",
+        "circuit-breaker",
+        "retries",
+        "reliability"
+      ]
+    }
+  },
+  {
+    "id": "doc_024",
+    "text": "An internal integration failed because two services expected different versions of the same API contract. The teams introduced versioned endpoints and contract tests to detect incompatible changes before deployment.",
+    "metadata": {
+      "title": "API Contract Compatibility Between Services",
+      "tags": [
+        "api",
+        "integration",
+        "versioning",
+        "testing"
+      ]
+    }
+  },
+  {
+    "id": "doc_025",
+    "text": "A scheduled batch job missed its processing window because a long-running task blocked subsequent jobs. The scheduler was changed to run independent tasks concurrently and added execution-time monitoring.",
+    "metadata": {
+      "title": "Batch Processing Delay and Scheduler Improvements",
+      "tags": [
+        "batch",
+        "scheduler",
+        "automation",
+        "performance"
+      ]
+    }
+  },
+  {
+    "id": "doc_026",
+    "text": "A service became unavailable during a zone-level infrastructure failure. Traffic was redirected to healthy zones, and the architecture was updated to distribute critical workloads across multiple availability zones.",
+    "metadata": {
+      "title": "Service Recovery After Availability Zone Failure",
+      "tags": [
+        "availability",
+        "disaster-recovery",
+        "infrastructure",
+        "failover"
+      ]
+    }
+  },
+  {
+    "id": "doc_027",
+    "text": "An HTTP client generated excessive outbound requests because failed operations were retried without a limit. Exponential backoff and a maximum retry count were introduced to reduce pressure on the downstream service.",
+    "metadata": {
+      "title": "Controlling Excessive HTTP Retries",
+      "tags": [
+        "http",
+        "retries",
+        "backoff",
+        "api"
+      ]
+    }
+  },
+  {
+    "id": "doc_028",
+    "text": "A search service returned inconsistent results after its index was rebuilt while documents were being updated. The team introduced versioned indexes and atomic index switching to avoid partially updated search results.",
+    "metadata": {
+      "title": "Consistent Search Results During Index Rebuild",
+      "tags": [
+        "search",
+        "indexing",
+        "consistency",
+        "deployment"
+      ]
+    }
+  },
+  {
+    "id": "doc_029",
+    "text": "A file-processing service slowed down when large uploads consumed all available worker threads. Engineers introduced upload size limits, asynchronous processing, and a queue-based worker model.",
+    "metadata": {
+      "title": "Large File Uploads Causing Worker Saturation",
+      "tags": [
+        "files",
+        "workers",
+        "queue",
+        "performance"
+      ]
+    }
+  },
+  {
+    "id": "doc_030",
+    "text": "An incident review found that recovery took longer because operational runbooks were outdated. The team documented current rollback, failover, verification, and communication procedures and scheduled periodic reviews.",
+    "metadata": {
+      "title": "Improving Incident Recovery With Operational Runbooks",
+      "tags": [
+        "incident-management",
+        "runbooks",
+        "recovery",
+        "operations"
+      ]
+    }
+  }
+]
